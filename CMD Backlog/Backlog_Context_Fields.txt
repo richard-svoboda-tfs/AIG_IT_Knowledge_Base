@@ -1,0 +1,173 @@
+# Backlog Context and Root-Cause Analysis
+
+Use this guidance when a user asks why something is delayed, blocked, at risk, causing an issue, or asks about the main issues affecting orders.
+
+## Column Selection
+
+Before analyzing the user request, first review the Knowledge file:
+
+`aig.aig_dm.aigdm2_backlog Columns`
+
+Use this file as the primary source for column meanings. Confirm actual column availability from the connected source table. Procedure-derived fields explicitly defined in this guidance may be used when present in the table.
+
+Based on the user's intent:
+
+* identify all relevant columns that may help explain the issue;
+* use applicable structured fields, free-text comments, reason fields, expected timing fields, feedback fields, dates, status fields, exception fields, customer, BU, region, country, factory, and backlog values;
+* identify relevant fields dynamically from the current column dictionary rather than relying only on a fixed list of column names;
+* Use columns documented in the columns Knowledge file. Procedure-derived fields explicitly defined in this file may also be used when they are present in the source table.
+
+After identifying the relevant columns, retrieve and analyze the applicable data before answering the user.
+
+## Preferred Explanatory Context
+
+Start with the order's current category, subcategory, scheduling status, block status, and available revenue commitment context.
+
+Then identify and use the applicable structured reason, free-text comment, expected timing, feedback, escalation, and item-level fields that relate to the order's current backlog category or issue.
+
+Examples of backlog contexts may include Blocks, Unscheduled, Shipped-Not-Invoiced, OSD Past Due, CRD Past Due, CRD 2032+, Pull In, or other categories present in the source data.
+
+Use the current column dictionary to determine which fields apply to each context.
+
+Do not restrict the analysis to a fixed field list.
+
+Also use any other relevant columns identified from `aig.aig_dm.aigdm2_backlog Columns` when they help answer the user's question.
+
+## Backlog Business Term Definitions
+
+Use the following definitions when interpreting or analyzing Push Out and Pull In backlog.
+
+Push Out: Backlog where the order line's CRD at the fiscal-quarter-start snapshot was within the current fiscal quarter, but the same order line's current CRD is now within the immediately following fiscal quarter. Orders already in the following quarter at quarter start are excluded. Value is measured using the current snapshot backlog amount.
+
+Pull In: Backlog where the order line's CRD at the fiscal-quarter-start snapshot was within the immediately following fiscal quarter, but the same order line's current CRD is now within the current fiscal quarter. Value is measured using the current snapshot backlog amount.
+
+## Analysis Behavior
+
+Analyze all relevant structured fields and free-text comments together before giving a conclusion.
+
+Use the fields that correspond to the order's current category or issue. Do not assume that block-related fields are the primary explanation when the order belongs to another backlog category.
+
+Free-text should be interpreted in the context of the related order information, including customer, BU, region, country, factory, dates, backlog amount, and other applicable fields.
+
+Treat structured reasons, comments, expected timing, actions, feedback, and current status as different types of evidence. Do not combine them into a single root cause unless the data supports that conclusion.
+
+Do not assume that no cause exists because one reason or comment field is blank. Check the other relevant fields and comments before concluding that the cause is unavailable.
+
+When multiple comments or status fields exist, consider the most recent available information. Use available update dates or comment metadata when useful for understanding freshness.
+
+If structured fields and comments conflict, report the conflicting evidence rather than choosing one without support.
+
+For multi-order questions such as region, BU, country, customer, or factory:
+
+* identify recurring root-cause themes from the retrieved data;
+* summarize rather than listing all raw comments;
+* quantify affected backlog where possible;
+* use representative orders when useful.
+
+Examples of themes may include customer delay, site/lab readiness, installation, supply constraints, credit/prepayment, documentation, compliance, scheduling, shipping/logistics, factory dependency, or data-quality issues.
+
+These themes are examples only. Do not force the data into this list. Use other themes when they are directly supported by the retrieved data.
+
+The field list and theme examples are guidance on where to look. They must not hardcode the business conclusion.
+
+If the available fields identify an issue or status but do not provide enough evidence for the underlying cause, state that the root cause is not documented in the available data.
+
+Never invent a cause, resolution date, action, or owner that is not supported by the retrieved data.
+
+## Category Definitions and Analysis Fields
+
+Use the published category values. The definitions below explain how each category is derived and which fields should be checked for deeper analysis. A category or status is not automatically the root cause. Category rules are sequential, so the first matching rule applies. Use fiscal-calendar boundaries.
+
+### Shipped-not-Invoiced (Shipped to Customer)
+
+**Definition:** `customer_ship_date` is populated and is not blank, zero, or a 1900 placeholder.
+
+**Subcategories:** `Requires Installation for Rev Rec` when installation acceptance or leasing treatment applies; otherwise `Pending Invoicing Rev Rec`.
+
+**Check:** `reason_sni`, `comment_sni`, `expected_week_sni`, `itemnumbers_sni`, billing number and block fields, billing relevance, MIRO status, revenue-recognition categories, installation fields, shipment dates, and revenue-commitment context.
+
+Do not assume all SNI is only waiting for invoicing. Report installation/acceptance, delivery, missing parts, documentation, customer approval, billing, or system issues only when supported by the data.
+
+### CRD in 2032+
+
+**Definition:** the applicable CRD year is 2032 or later.
+
+**Check:** `reason_crd2032`, `comment_crd2032`, `expected_week_crd_2032`, CRD, order status, customer, business unit, region, and revenue-commitment context. Do not call it a data error without evidence.
+
+### Unscheduled Backlog
+
+**Definition:** applicable CRD is between the start of the corresponding fiscal quarter one year earlier and current-quarter end; the order is not `Scheduled Order`; order-level status is `No Block`; and customer ship date is blank or a placeholder.
+
+**Check:** `scheduled_order_status`, object-status fields, order status, factory, `multiple_factory`, load/schedule/planned-delivery dates, `reason_unscheduled`, `comment_unscheduled`, `expected_week_unscheduled`, order exceptions, and revenue-commitment context.
+
+### Blocks
+
+**Definition:** applicable CRD is between the start of the corresponding fiscal quarter one year earlier and current-quarter end, and order-level `no_block` is not `No Block`. Because blocking is evaluated at order level, review all lines of an order before assigning the condition to one line.
+
+**Delivery-block mapping:**
+
+* blank, `0`, `1`, `2`, `I1`, `I4`, `NA`, `CL`, `OB`: no delivery-block category;
+* `05`, `06`, `28`, `51`, `80`, `CF`, `CH`, `MK`, `NL`, `TC`, `Z1`, `Z2`, `Z5`, `Z6`, `Z7`, `ZC`, `ZD`, `ZE`: Compliance Block;
+* `07`, `09`, `10`, `16`, `17`, `18`, `50`: Credit & Cash Block;
+* `13`: Lab Not Ready;
+* `SA`: Other Block;
+* any other nonblank code: Delivery Block.
+
+**Final subcategories:** Credit & Cash Block (China+India), Credit & Cash Block (exclude China+India), Compliance Block, Customer Hold, Delivery Block, Lab Not Ready, and Other Block.
+
+**Check:** `subcategory`, `block_category`, `backlog_status`, `overallcredstat`, delivery-block status/label, billing-block code/label, `reason_blocks`, `comment_blocks`, `expected_week_blocks`, escalation, and revenue-commitment context.
+
+If dedicated reason/comment fields are blank, continue with credit status and block codes/labels. These may establish the operational blocking condition, but not necessarily the underlying business cause. State when the deeper cause is undocumented.
+
+### Commercial Inventory (Shipped from Factory)
+
+**Definition:** the order is in the current-quarter execution window, scheduled and unblocked, with a valid actual factory ship date but no valid customer ship date.
+
+**Check:** actual factory ship date and aging, customer ship date, load date, delivery/PGI fields, delivery-line status, incoterms, factory, warehouse-shipping communication date, installation requirement, and revenue-recognition context.
+
+### Clean Scheduled Backlog — Current Quarter
+
+**Definition:** the order is in the current-quarter execution window, scheduled and unblocked, with no valid customer ship date and no actual factory ship date.
+
+**Check:** CRD, load/schedule/planned-delivery dates, factory, shipment priority, installation requirement, delivery status, supply-site holds, and order exceptions. This is executable backlog, not automatically evidence of delay.
+
+### Pull-in Candidates
+
+* `Pull in (CRD In CQ, Load date after CQ)`: CRD is in the current quarter but load date is in or after the first month of next quarter.
+* `Pull in (CRD Next quarter month 1)`: CRD is in the first fiscal month of next quarter.
+
+**Check:** CRD, load date, pull-in comment, customer/factory feedback, expected week, factory, customer, priority, block status, and scheduling status. These categories identify opportunities; they do not prove historical movement.
+
+### Future and Residual Categories
+
+* `CRD next quarter M2 & M3`: CRD is in months two or three of next fiscal quarter.
+* `CRD after next quarter up to 2031`: CRD is after next-quarter end and before 2032.
+* `Scheduled No Estimated Delivery date`: scheduled backlog with a missing, zero, or 1900-placeholder load date.
+* `CRD and Load Date in prior quarters`: fallback when no earlier category rule applies.
+
+**Check:** CRD/OSD aging, schedule and load dates, block and delivery status, factory, order exceptions, and applicable reason/comment fields. Do not assume all records in a residual category have the same cause.
+
+### Past-Due Analysis
+
+For CRD past due, check `crd_past_due_no_due`, `crd_past_due_categories`, `crd_aging`, the CRD reason/comment/expected-week fields, current CRD, scheduling status, and block status.
+
+For OSD past due, check `osd_past_due_categories`, `osd_aging_days`, `aging_bucket_osd`, original scheduled date, the OSD reason/comment/expected-week fields, and current schedule/load dates.
+
+### Category Groups
+
+* `Close To Be Done`: SNI, Commercial Inventory, Clean Scheduled Backlog.
+* `What Needs To Be Done`: Blocks.
+* `What Could Be Done`: Unscheduled, Pull-in candidates, Scheduled No Estimated Delivery Date.
+* `Memo`: CRD 2032+, future-quarter, and prior-quarter informational categories.
+
+Category groups describe workflow position, not root cause.
+
+### Analysis Requirement
+
+For the requested category, quantify the main subcategories, show where the backlog is concentrated, and inspect the listed fields. Distinguish the category, the documented operational condition, and the confirmed root cause. If one reason/comment field is blank, check the other relevant status, code, label, date, and context fields before concluding that the cause is unavailable. Recommend only actions supported by evidence.
+
+### Portfolio Analysis Safeguards
+For multi-order or executive analysis:
+- Preserve the exact user-requested scope through all totals, drilldowns, percentages, and recommendations. Do not apply task-specific exclusions unless that task/report is explicitly requested. Reconcile detailed categories to the scoped total before answering.
+- Do not stop at the headline category/subcategory. Test at least one additional supported dimension that can change management action, such as scheduling stage, credit status, geography, factory, customer, aging, billing condition, installation/acceptance dependency, or documented reason/comment evidence.
+- When splitting a population into operational drivers, state whether the groups are mutually exclusive or overlapping. Do not double-count overlapping evidence. If no documented precedence exists, do not invent one; report the overlap separately.

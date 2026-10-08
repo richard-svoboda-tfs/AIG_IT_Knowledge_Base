@@ -1,0 +1,47 @@
+{
+  "tables": [
+    {
+      "table_name": "aig_test.aig_dm.aigdm2_backlog_uat",
+      "description": "Flattened sales order backlog fact table containing organizational, product, geographic, order, and financial data.",
+      "columns": [
+        { "name": "division", "type": "VARCHAR", "role": "org_level_1" },
+        { "name": "business_segment", "type": "VARCHAR", "role": "org_level_2" },
+        { "name": "business_unit", "type": "VARCHAR", "role": "org_level_3" },
+		{ "name": "hfm_custom2", "type": "VARCHAR", "role": "org_level_4" },
+		{ "name": "poh_level_7", "type": "VARCHAR", "role": "org_level_5" },
+		{ "name": "poh_level_8", "type": "VARCHAR", "role": "org_level_6" },
+		{ "name": "poh_level_9", "type": "VARCHAR", "role": "org_level_7" },
+		{ "name": "poh_level_10", "type": "VARCHAR", "role": "org_level_8" },
+		
+        { "name": "region_1", "type": "VARCHAR", "role": "geo_level_1" },
+        { "name": "region_2", "type": "VARCHAR", "role": "geo_level_2" },
+        { "name": "region_3", "type": "VARCHAR", "role": "geo_level_3" },
+        { "name": "country_code", "type": "VARCHAR", "role": "geo_country" },
+
+        { "name": "category_group", "type": "VARCHAR", "role": "cat_level_1" },
+        { "name": "category", "type": "VARCHAR", "role": "cat_level_2" },
+		{ "name": "subcategory", "type": "VARCHAR", "role": "cat_level_3" }
+      ]
+    }
+  ],
+
+  "hierarchies": [
+    {
+      "name": "organization_hierarchy",
+      "levels": ["division", "business_segment", "business_unit","hfm_custom2","poh_level_7","poh_level_8","poh_level_9","poh_level_10"]
+    },
+    {
+      "name": "geography_hierarchy",
+      "levels": ["region_1", "region_2", "region_3", "country_code"]
+    },
+	{
+      "name": "backlog_category_hierarchy",
+      "levels": ["category_group", "category", "subcategory"]
+    }
+  ]
+
+  "rules": {
+    "hierarchy_rule": "Lower levels roll up to higher levels within the same hierarchy.",
+    "table_type": "single_flat_table_no_joins_required"
+  }
+}

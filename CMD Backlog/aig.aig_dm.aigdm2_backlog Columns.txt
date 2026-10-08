@@ -1,0 +1,176 @@
+
+acceptance_date (numeric): Date when the order was formally accepted into processing.
+accepted_order_date (numeric): System date when the order acceptance was recorded.
+actual_factory_ship_date (int4): Date the item physically departed the factory.
+actual_po_issue_date (varchar): Customer purchase order issue date (stored as text).
+amount_a$ (float8): Monetary amount in USD using actual or monthly FX rates.
+amount_lc (float8): Monetary amount in local currency.
+amount_tc (float8): Monetary amount in transaction currency.
+backlog_status (varchar): Current backlog classification/status of the order line.
+billing_block_code (varchar): Code identifying a billing or invoicing block.
+billing_block_label (varchar): Description explaining the billing block reason.
+billing_number (varchar): Unique identifier for the billing or invoice document.
+block_category (varchar): Normalized category grouping of block reasons.
+business_segment (varchar): Sub-division within the business unit for reporting.
+business_unit (varchar): Organizational unit accountable for the order.
+category (varchar): Detailed reporting bucket describing order status/action.
+category_group (varchar): Higher-level grouping used for backlog categorization.
+cmenddate (int4): Current month end date used for reporting alignment.
+cmstartdate (int4): Current month start date used for reporting alignment.
+cqenddate (int4): Current quarter end date used for reporting alignment.
+cqstartdate (int4): Current quarter start date used for reporting alignment.
+created_by (varchar): User ID who created the order in the system.
+created_by_name (varchar): Name of the user who created the order.
+cust_po_date (numeric): Customer purchase order date provided at order entry.
+customer_request_date (int4): Customer requested delivery date (CRD).
+customer_ship_date (numeric): Date goods were shipped to the customer.
+delivered_quantity_mapping (float8): Delivered quantity aligned to reporting granularity.
+delivery_block_label (varchar): Description explaining the delivery block reason.
+delivery_block_status (varchar): Current state of the delivery block (e.g., active, cleared).
+delivery_create_date (varchar): Date when the delivery document was created.
+delivery_pgi_date_hold (varchar): Hold indicator/date related to goods issue posting (PGI).
+distribution_channel_code (varchar): Code representing the route-to-market channel.
+division (varchar): Division responsible for the order (e.g., CMD, CAD, DSAS, MSD).
+drop_ship_flag (varchar): Indicator that the order is fulfilled via drop shipment.
+factory_ship_date (numeric): Planned date for shipment from the factory.
+hfm_custom2 (varchar): Financial or reporting attribute used for product line mapping.
+hfm_entity (varchar): Legal entity used for financial consolidation (HFM).
+incoterms (varchar): Incoterms defining delivery responsibility and risk transfer.
+install_compl_date (numeric): Date when installation of the product was completed.
+intangible_flag (varchar): Indicator that the item is non-physical (e.g., software/service).
+invoice_net_value_in_plan_currency (float8): Invoice value expressed in planning currency.
+item_class (varchar): Description of item classification (e.g., product, service).
+item_class_code (varchar): Code indicating item type (e.g., FG, SVC).
+item_category_group (varchar): Grouping of items for category-based reporting.
+lineoverallstatus (varchar): Overall processing status at the order line level.
+load_date (numeric): Planned or confirmed date when goods are loaded for shipment.
+miro_stat (varchar): Status of invoice verification (MIRO process).
+no_block (varchar): Indicator that no blocking condition exists on the order.
+nqenddate (int4): Next quarter end date used for forward-looking reporting.
+nqfmenddate (int4): End date of the first month in the next quarter.
+nqfmstartdate (int4): Start date of the first month in the next quarter.
+object_status_e13 (varchar): System status flag E13.
+object_status_e14 (varchar): System status flag E14.
+object_status_e15 (varchar): System status flag E15.
+order_create_date (int4): Date the order was created in the ERP system.
+order_item_number (varchar): Line identifier within the sales order.
+order_number (varchar): Unique sales order identifier.
+order_other_exceptions (varchar): Additional exception notes or flags on the order.
+order_request_date (int4): Customer requested delivery date (CRD).
+order_status (varchar): Current overall status of the order.
+order_type_code (varchar): ERP code identifying the sales order type.
+order_request_date_exc (numeric): Adjusted or exception-based requested delivery date.
+original_schedule_date (numeric): Initial system-generated scheduled delivery date.
+original_scheduled_date (numeric): Duplicate/variant of original scheduled date.
+overall_processing_status (varchar): Overall processing state of the order.
+overallcredstat (varchar): Credit status of the order.
+pending_order_date (numeric): Date when the order moved into pending status.
+planned_delivery_date (numeric): Current planned delivery date after adjustments.
+plant (varchar): Code of the manufacturing or fulfillment plant.
+po_delivery_pgi_date (int4): PGI (goods issue) date for purchase order delivery.
+po_delivery_pgi_date_hold (varchar): Hold indicator/date for PO-related goods issue.
+product (varchar): Commercial product name or description.
+profit_center_code (varchar): Profit center responsible for the order.
+purchasing_document (varchar): Reference number for the purchasing document.
+pystartdate (int4): Previous year start date used for reporting comparisons.
+quantity (float8): Ordered quantity for the line item.
+reference_date (int4): Reference date used for reporting snapshots.
+region_1 (varchar): Primary geographical region.
+region_2 (varchar): Secondary geographical region.
+region_3 (varchar): Tertiary geographical region.
+relevant_for_billing (varchar): Indicator whether the item is eligible for billing.
+relevant_for_delivery (varchar): Indicator whether the item is eligible for delivery.
+right_to_return_date (varchar): Last eligible date for customer returns.
+sales_rep_name (varchar): Name of the responsible sales representative.
+schedule_date (numeric): Scheduled delivery or shipment date.
+scheduled_order_status (varchar): Current scheduling or shipment status of the order line.
+shpcommwarehouse_date (numeric): Date warehouse shipping communication occurred.
+sku_name (varchar): Description of the SKU or material.
+sku_number (varchar): Internal material or part number.
+so_po_ship_date (varchar): Ship date associated with sales or purchase order.
+sold_to_name (varchar): Name of the sold-to (ordering) customer.
+sold_to_number (varchar): ERP identifier of the sold-to customer.
+source (varchar): Data source identifier.
+source_system (varchar): System from which the data originated (e.g., SAP).
+source_cd (varchar): Source system code.
+supply_site_confirmed_ship_date_hold (varchar): Hold indicator for confirmed ship date at supply site.
+country_code (varchar): Country associated with the order or shipment.
+order_primary_business_unit (varchar): Primary business unit responsible for the order.
+Multi_BU_Order_Flag (varchar): Indicates whether the order contains items from multiple business units, Y-Yes or N-No.
+crd_aging (bigint): Number of days the order is past or before the Customer Request Date (CRD).
+instrument_sku_number (varchar): SKU number of the associated instrument product.
+date_as_of (int4): Snapshot date representing data extraction point (YYYYMMDD format).
+complete_shipment_flag (varchar): Y/N Full order shipment required (SAP PR1, rest N).
+install_required_flag (varchar): Y/N Installation required flag (SAP PR1, rest N).
+prior_load_date (int4): prior value in column load date.
+prior_load_date_changed_date_as_of (int4): date when the load date last time changed.
+delivery_line_status (varchar): Fully Delivered / Partially Delivered / Not Delivered.
+priority_shipment (int4): Ranking priority of shipment, lower number mean higher priority. Visualize ranking based of user context. derived from install_required_flag, customer_request_date, region_1, amount_a$.
+subcategory (varchar): Detailed reporting category within the backlog classification.
+afsd_aging_days (bigint):  Number of days since the Actual Factory Ship Date (AFSD).
+aging_bucket_afsd (varchar): Aging range based on Actual Factory Ship Date (AFSD).
+revrec_header_category (varchar): Revenue recognition policy assigned at the sales order header level.
+revrec_line_level_category (varchar): Revenue recognition policy assigned at the individual order line level.
+ocd_aging_days (bigint): Number of days since the Original Commit Date (OCD).
+aging_bucket_ocd (varchar): Aging range based on the Original Commit Date (OCD).
+osd_aging_days (bigint): Number of days since the Original Scheduled Date (OSD). 
+aging_bucket_osd (varchar): Aging range based on the Original Scheduled Date (OSD).  
+net_backlog_a$ (float8): Net backlog value after applying reporting adjustments and exclusions.
+multi_bu_values (varchar): Comma-separated list of distinct business units associated with a multi-BU sales order.
+factory (varchar): Manufacturing or fulfillment factory associated with the order line.
+new_factory_value (varchar): Standardized or derived factory value used for consistent factory-level reporting and analysis.
+cpq_expected_delivery_date (numeric): Expected delivery date for the order or line item as maintained or calculated in the CPQ system.
+cpq_expiration_date (numeric): Date on which the CPQ quote, configuration, or associated commercial offer expires.
+cpq_order_submitted_date (numeric): Date on which the order was formally submitted through the CPQ system.
+sfdc_estimated_shipping_date (numeric): Estimated date on which the order or line item is expected to ship, as recorded in Salesforce (SFDC).
+sfdc_earliest_delivery_date (numeric): Earliest currently available delivery date for the order or line item, as recorded in Salesforce.
+sfdc_projected_delivery_date (numeric): Current projected delivery date for the order or line item based on information maintained in Salesforce.
+criticality (varchar): Business-defined level of urgency or priority assigned to the order, line item, customer request, or associated issue.
+revenue_commitment_comments (varchar): Free-text comments providing additional context, assumptions, risks, or updates related to the revenue commitment.
+expected_month_of_installation (varchar): Month in which the product, equipment, or system is currently expected to be installed at the customer location.
+revenue_commitment_date_created (numeric): Date on which the revenue commitment record was initially created.
+revenue_commitment_username (varchar): Username of the user associated with creating, maintaining, or updating the revenue commitment record.
+revenue_commitment_date_updated (numeric): Date of the most recent update to the revenue commitment record.
+teamselected (varchar): Team selected as responsible for, or associated with, the applicable order, issue, follow-up activity, or commitment.
+reasonselected (varchar): Selected business reason associated with the applicable status, exception, issue, or follow-up activity.
+itemnumbers (varchar): Item or line-item identifiers associated with the applicable order, issue, exception, or follow-up record.
+expected_week_crd_2032 (varchar): Expected week associated with resolution, completion, or planned follow-up for the CRD 2032 condition.
+reason_crd2032 (varchar): Business reason recorded for the CRD 2032 condition, exception, or status.
+comment_crd2032 (varchar): Free-text comments providing additional details or context regarding the CRD 2032 condition.
+comment_unscheduled (varchar): Free-text comments explaining the current status or circumstances of an unscheduled order or line item.
+expected_week_unscheduled (varchar): Expected week in which an unscheduled order or line item is anticipated to be scheduled, progressed, or otherwise addressed.
+reason_unscheduled (varchar): Business reason explaining why the order or line item is currently unscheduled.
+comment_blocks (varchar): Free-text comments describing blocks, constraints, dependencies, or issues currently affecting the order or line item.
+reason_blocks (varchar): Business reason identifying the cause of the block or constraint affecting the order or line item.
+expected_week_blocks (varchar): Expected week in which the identified block or constraint is anticipated to be resolved or otherwise addressed.
+comment_sni (varchar): Free-text comments providing additional context or updates related to the SNI condition or category.
+expected_week_sni (varchar): Expected week associated with the planned resolution, completion, or next action for the SNI condition.
+reason_sni (varchar): Business reason associated with the SNI condition, exception, or status.
+itemnumbers_sni (varchar): Item or line-item identifiers specifically associated with the SNI condition or issue.
+comment_osd_past_due (varchar): Free-text comments explaining the circumstances, impact, or latest status of an OSD past-due condition.
+reason_osd_past_due (varchar): Business reason recorded for why the OSD is currently past due.
+expected_week_osd_past_due (varchar): Expected week in which the OSD past-due condition is anticipated to be resolved, recovered, or otherwise addressed.
+comment_pull_in (varchar): Free-text comments describing a request, discussion, or action to advance the current production, shipment, or delivery schedule.
+cust_feedback_pull_in (varchar): Customer feedback or response regarding a request to advance the current schedule or delivery date.
+factory_feedback_pull_in (varchar): Factory feedback regarding the feasibility, status, constraints, or response to a requested schedule or delivery pull-in.
+expected_week_pull_in (varchar): Expected week associated with the requested, planned, or confirmed advancement of the current schedule or delivery date.
+escalation (varchar): Indicates whether the order, line item, issue, or customer request has been escalated or identified as requiring elevated attention.
+comment_crd_past_due (varchar): Free-text comments explaining the circumstances, impact, or latest status of a CRD past-due condition.
+expected_week_crd_past_due (varchar): Expected week in which the CRD past-due condition is anticipated to be resolved, recovered, or otherwise addressed.
+critical_date_added (varchar): Date when the SKU/part was added to the Critical Part List; use it to understand when the item was identified as critical.
+critical_business_unit (varchar): Business unit associated with the critical SKU/part; use it to segment critical-part exposure by business unit.
+critical_sku (varchar): SKU/material number identified on the Critical Part List; use it to identify backlog lines associated with critical parts.
+critical_sku_description (varchar): Business description of the critical SKU/material; use it to explain which critical product or part is involved.
+critical_systems (varchar): System or instrument family associated with the critical SKU; use it to identify which systems may be impacted by critical-part constraints.
+critical_custom_2 (varchar): Custom 2 hierarchy/classification associated with the critical SKU; use it for additional business segmentation of critical-part exposure.
+criticality (varchar): Indicates whether the SKU/part is classified as critical; use it to identify and prioritize backlog associated with critical parts.
+poh_level_7 (varchar): Product Org. Hierarchy level 7, Detail Product Groupings
+poh_level_8 (varchar): Product Org. Hierarchy level 8, Detail Product Groupings
+poh_level_9 (varchar): Product Org. Hierarchy level 9, Detail Product Groupings
+poh_level_10 (varchar): Product Org. Hierarchy level 10, Detail Product Groupings
+fiscal_year (integer): Fiscal year associated with the record; use this field instead of deriving fiscal year from calendar dates.
+fiscal_quarter (integer): Fiscal quarter associated with the record; use this field for fiscal-quarter filtering, grouping, and quarter-based analysis.
+fiscal_quarter_week_number (integer): Week number within the fiscal quarter; use it to answer questions about a specific week or relative week within the fiscal quarter.
+fiscal_quarter_start_date (timestamp): Start date of the applicable fiscal quarter; use it as the authoritative lower date boundary when determining whether a date falls within the fiscal quarter.
+fiscal_quarter_end_date (timestamp): End date of the applicable fiscal quarter; use it as the authoritative upper date boundary when determining whether a date falls within the fiscal quarter.
+fiscal_year_week_number (integer): Week number within the fiscal year; use it for fiscal-week filtering, sequencing, trend analysis, and comparisons across fiscal quarters.
